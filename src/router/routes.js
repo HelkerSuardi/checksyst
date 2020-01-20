@@ -3,9 +3,13 @@ const routes = [
     path: "/",
     component: () => import("layouts/MyLayout.vue"),
     children: [
-      { 
-        path: "", 
-        component: () => import("pages/Index.vue") 
+      {
+        path: "/",
+        redirect: "/checks"
+      },
+      {
+        path: "",
+        redirect: "/checks"
       },
       //USERS
       {
@@ -51,9 +55,15 @@ const routes = [
         name: "checks_add",
         component: () => import("../pages/checks/Form.vue")
       },
+
     ]
   },
-  
+  {
+    path: "/login",
+    name: "login",
+    component: () => import("../layouts/Login.vue")
+  }
+
 ];
 
 // Always leave this as last one
