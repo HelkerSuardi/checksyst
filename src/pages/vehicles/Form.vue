@@ -1,9 +1,9 @@
 <template>
     <div>
         <q-page :padding="true">
-            <q-item-label style="font-size: 2rem" class="q-ml-md q-mb-md"> 
+            <q-item-label style="font-size: 2rem" class="q-ml-md q-mb-md">
                 Veículo
-            </q-item-label>  
+            </q-item-label>
             <form
                 method="post"
                 class="q-ml-md"
@@ -14,13 +14,13 @@
                             label="Nome"
                             outlined
                         />
-                    </div>                  
+                    </div>
                     <div class="col-5 q-mb-md q-mr-md">
                         <q-input
                             label="Placa"
                             outlined
                         />
-                    </div>                  
+                    </div>
                 </div>
                 <div class="row q-my-form">
                     <div class="col-5 q-mb-md q-mr-md">
@@ -30,7 +30,7 @@
                             filled
                             type="file"
                         />
-                    </div>                                    
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-10" style="margin-left: 1rem">
@@ -48,7 +48,7 @@
                             color="green-13"
                             class="float-right q-mr-md"
                         />
-                    </div>                    
+                    </div>
                 </div>
             </form>
         </q-page>
