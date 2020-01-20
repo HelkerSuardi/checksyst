@@ -2,10 +2,9 @@
 
 import * as jwt from 'jsonwebtoken';
 
-const ID_KEY = process.env.ID_KEY || '_phx_id_';
-const SOCKET_KEY = process.env.PUSHER_KEY || '_phx_socket_';
-const TOKEN_KEY = process.env.TOKEN_KEY || '_phx_token_';
-const USERNAME_KEY = process.env.USERNAME_KEY || '_phx_username_';
+const ID_KEY = process.env.ID_KEY || '_chs_id_';
+const TOKEN_KEY = process.env.TOKEN_KEY || '_chs_token_';
+const USERNAME_KEY = process.env.USERNAME_KEY || '_chs_username_';
 const JWT_TOKEN_SECRET = process.env.JWT_TOKEN_SECRET;
 
 const login = data => {
@@ -35,10 +34,6 @@ const getUsername = () => {
     return localStorage.getItem(USERNAME_KEY);
 };
 
-const getSocketKey = () => {
-    return sessionStorage.getItem(SOCKET_KEY);
-};
-
 const loggedIn = async () => {
     const token = getToken();
 
@@ -60,5 +55,4 @@ export default {
     getId,
     getToken,
     getUsername,
-    getSocketKey,
 };
