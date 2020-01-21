@@ -25,61 +25,18 @@
       content-class="bg-grey-2"
     >
       <q-list>
-        <q-item 
-          clickable 
-          :to="{name: 'users'}"
-        >
-          <q-item-section avatar>
-            <q-icon name="people_outline" />
-          </q-item-section>
-          <q-item-section>
-            <q-item-label>Menu Usuários</q-item-label>
-          </q-item-section>
-        </q-item>
         <q-item
           clickable
-          :to="{name: 'vehicles'}"
+          v-for="menu in menu"
+          :key="menu.name"
+          :to="{ name: menu.route }"
+
         >
           <q-item-section avatar>
-            <q-icon name="directions_car" />
+            <q-icon :name="menu.icon" />
           </q-item-section>
           <q-item-section>
-            <q-item-label>Menu Veículos</q-item-label>
-          </q-item-section>
-        </q-item>
-        <q-item
-          clickable
-          :to="{name: 'items'}"
-        >
-          <q-item-section avatar>
-            <q-icon name="build" />
-          </q-item-section>
-          <q-item-section>
-            <q-item-label>Menu Itens/Equip.</q-item-label>
-          </q-item-section>
-        </q-item>
-        <q-item
-          clickable
-          :to="{name: 'checks'}"
-        >
-          <q-item-section avatar>
-            <q-icon name="check_circle_outline" />
-          </q-item-section>
-          <q-item-section>
-            <q-item-label>Menu Checagens</q-item-label>
-          </q-item-section>
-        </q-item>
-        <q-item
-          clickable
-          tag="a"
-          target="_blank"
-          href="https://twitter.quasar.dev"
-        >
-          <q-item-section avatar>
-            <q-icon name="input" />
-          </q-item-section>
-          <q-item-section>
-            <q-item-label>Sair</q-item-label>
+            <q-item-label> {{ menu.name }} </q-item-label>
           </q-item-section>
         </q-item>
       </q-list>
@@ -92,13 +49,65 @@
 </template>
 
 <script>
+import authService from '../service/auth-service'
+
 export default {
   name: "MyLayout",
 
   data() {
     return {
-      leftDrawerOpen: false
+      leftDrawerOpen: false,
+      menu: [
+        {
+          name: 'Menu Usuários',
+          allowedRoles: ['superAdm'],
+          icon: 'people_outline',
+          route: 'users'
+        },
+        {
+          name: 'Menu Veículos',
+          allowedRoles: ['superAdm'],
+          icon: 'directions_car',
+          route: 'vehicles'
+        },
+        {
+          name: 'Menu Itens/Equips',
+          allowedRoles: ['superAdm'],
+          icon: 'build',
+          route: 'items'
+        },
+        {
+          name: 'Menu Checagens',
+          allowedRoles: ['superAdm', 'adm'],
+          icon: 'check_circle_outline',
+          route: 'checks'
+        },
+        {
+          name: 'Sair',
+          allowedRoles: ['superAdm', 'adm'],
+          icon: 'input',
+          route: 'logout'
+        },
+      ]
     };
+  },
+
+  methods: {
+    canSeeMenu (roles) {
+      for (const role of roles) {
+        if (authService.hasRole(role)) {
+          return true
+        }
+      }
+
+      return false
+    }
+  },
+
+  computed: {
+    allowedMenus () {
+      return this.menu.filter(itemMenu => this.canSeeMenu(itemMenu.allowedRoles))
+    }
   }
 };
 </script>

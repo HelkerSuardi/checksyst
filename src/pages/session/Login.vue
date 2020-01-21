@@ -13,7 +13,7 @@ export default {
 
 <style>
  .loginScreen {
-   background-image: url("../assets/14710.jpg");
+   background-image: url("../../assets/14710.jpg");
    background-repeat: no-repeat;
    align-self: center;
    width: 100%;
