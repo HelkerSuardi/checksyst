@@ -34,6 +34,22 @@ const getUsername = () => {
     return localStorage.getItem(USERNAME_KEY);
 };
 
+const hasRole = role => {
+  const token = getToken()
+
+  if (!token) {
+    return false
+  }
+
+  const roles = jwt.decode(token, JWT_TOKEN_SECRET).role
+
+  if (!roles) {
+    return false
+  }
+
+  return roles.indexOf(role) !== -1
+}
+
 const loggedIn = async () => {
     const token = getToken();
 
@@ -55,4 +71,5 @@ export default {
     getId,
     getToken,
     getUsername,
+    hasRole
 };
