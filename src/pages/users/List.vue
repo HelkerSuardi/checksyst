@@ -1,11 +1,11 @@
 <template>
-    <div>        
-        <q-page :padding="true">  
-            <q-item-label style="font-size: 2rem" class="q-ml-md q-mb-md"> 
-                Usuários 
-            </q-item-label>                        
+    <div>
+        <q-page :padding="true">
+            <q-item-label style="font-size: 2rem" class="q-ml-md q-mb-md">
+                Usuários
+            </q-item-label>
             <q-table
-                :data="data"
+                :data="firefighters"
                 :columns="columns"
                 row-key="name"
             >
@@ -23,7 +23,7 @@
                     </q-btn-group>
                 </q-td>
                 <template slot= "top-right">
-                    <q-input v-model="filter" placeholder="Procurar">
+                    <q-input placeholder="Procurar">
                         <template v-slot:append>
                             <q-icon name="search" />
                         </template>
@@ -31,12 +31,15 @@
                 </template>
                 <div slot="top-left">
                     <q-btn label="Adicionar novo usuário" icon="add" color="green-13" :to="{ name: 'users_add' }" />
-                </div>               
+                </div>
             </q-table>
         </q-page>
     </div>
 </template>
 <script>
+import { createNamespacedHelpers } from 'vuex'
+const { mapActions, mapGetters } = createNamespacedHelpers('firefighter')
+
 export default {
     data () {
         return {
@@ -55,7 +58,7 @@ export default {
                     required: true,
                     label: 'Permissões',
                     align: 'left',
-                    field: row => row.permission,
+                    field: row => row.role,
                     format: val => `${val}`,
                     sortable: true
                 },
@@ -64,7 +67,7 @@ export default {
                     required: true,
                     label: 'RG',
                     align: 'left',
-                    field: row => row.document,
+                    field: row => row.rg,
                     format: val => `${val}`,
                     sortable: true
                 },
@@ -73,19 +76,24 @@ export default {
                     required: true,
                     label: 'Ações',
                     align: 'left',
-                    field: row => row.name,
+                    field: row => row._id,
                     format: val => `${val}`,
                     sortable: true
                 },
             ],
-            data: [
-                {
-                    name: 'Helker',
-                    permission: 'ADM',
-                    document: '111111111',                    
-                }
-            ]
         }
+    },
+
+    created() {
+      this.getFirefighters()
+    },
+
+    methods: {
+      ...mapActions(['getFirefighters'])
+    },
+
+    computed: {
+      ...mapGetters(['firefighters'])
     }
 }
 </script>

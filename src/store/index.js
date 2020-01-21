@@ -1,6 +1,10 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import vehicle from "./modules/vehicle";
+
+import vehicle from "./vehicle";
+import check from "./check";
+import firefighter from "./firefighter";
+import itemEquip from "./item-equip";
 
 Vue.use(Vuex);
 
@@ -12,7 +16,10 @@ Vue.use(Vuex);
 export default function(/* { ssrContext } */) {
   const Store = new Vuex.Store({
     modules: {
-      vehicle
+      vehicle,
+      check,
+      firefighter,
+      itemEquip
     }
   });
 
