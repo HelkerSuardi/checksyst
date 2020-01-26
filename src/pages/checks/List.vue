@@ -1,11 +1,11 @@
 <template>
-    <div>        
+    <div>
         <q-page :padding="true">
-            <q-item-label style="font-size: 2rem" class="q-ml-md q-mb-md"> 
-                Checagens 
-            </q-item-label>                          
+            <q-item-label style="font-size: 2rem" class="q-ml-md q-mb-md">
+                Checagens
+            </q-item-label>
             <q-table
-                :data="data"
+                :data="checks"
                 :columns="columns"
                 row-key="name"
             >
@@ -36,12 +36,15 @@
                 </template>
                 <div slot="top-left">
                     <q-btn label="adicionar nova checagem" icon="add" color="green-13" :to="{ name: 'checks_add' }" />
-                </div>               
+                </div>
             </q-table>
         </q-page>
     </div>
 </template>
 <script>
+import { createNamespacedHelpers } from 'vuex'
+const { mapActions, mapGetters } = createNamespacedHelpers('check')
+
 export default {
     data () {
         return {
@@ -83,14 +86,19 @@ export default {
                     sortable: true
                 },
             ],
-            data: [
-                {
-                    date: '10/10/20',
-                    hour: '17:53',
-                    responsible: 'Helker',                    
-                }
-            ]
         }
+    },
+
+    async created() {
+      this.getChecks()
+    },
+
+    methods: {
+      ...mapActions(['getChecks'])
+    },
+
+    computed: {
+      ...mapGetters(['checks'])
     }
 }
 </script>

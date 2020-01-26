@@ -1,11 +1,11 @@
 <template>
-    <div>        
-        <q-page :padding="true">   
-            <q-item-label style="font-size: 2rem" class="q-ml-md q-mb-md"> 
-                Itens/Equipamentos 
-            </q-item-label>                     
+    <div>
+        <q-page :padding="true">
+            <q-item-label style="font-size: 2rem" class="q-ml-md q-mb-md">
+                Itens/Equipamentos
+            </q-item-label>
             <q-table
-                :data="data"
+                :data="itemEquips"
                 :columns="columns"
                 row-key="name"
             >
@@ -31,12 +31,15 @@
                 </template>
                 <div slot="top-left">
                     <q-btn label="Add novo item/equipamento" icon="add" color="green-13" :to="{ name: 'items_add' }" />
-                </div>               
+                </div>
             </q-table>
         </q-page>
     </div>
 </template>
 <script>
+import { createNamespacedHelpers } from 'vuex'
+const { mapActions, mapGetters } = createNamespacedHelpers('itemEquip')
+
 export default {
     data () {
         return {
@@ -64,18 +67,24 @@ export default {
                     required: true,
                     label: 'Ações',
                     align: 'left',
-                    field: row => row.name,
+                    field: row => row._id,
                     format: val => `${val}`,
                     sortable: true
                 },
             ],
-            data: [
-                {
-                    name: 'Lanterna',
-                    type: 'Equipamento',                   
-                }
-            ]
         }
+    },
+
+    async created() {
+      this.getItemEquips()
+    },
+
+    methods: {
+      ...mapActions(['getItemEquips'])
+    },
+
+    computed: {
+      ...mapGetters(['itemEquips'])
     }
 }
 </script>

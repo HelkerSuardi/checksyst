@@ -14,7 +14,6 @@ const axiosAuthenticatedInstance = axios.create({
     transformRequest: [
         function(data, headers) {
             headers['x-access-token'] = authService.getToken();
-            headers['x-socket-id'] = authService.getSocketKey();
             return JSON.stringify(data);
         },
     ],
