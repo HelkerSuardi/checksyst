@@ -10,7 +10,7 @@
                 :columns="columns"
                 row-key="name"
             >
-                <q-td slot="body-cell-actions">
+                <q-td slot="body-cell-actions" slot-scope="props" :props="props">
                     <q-btn-group>
                         <q-btn
                             icon="edit"
@@ -20,6 +20,7 @@
                         <q-btn
                             icon="delete_forever"
                             text-color="red"
+                            @click="remove(props.row.id)"
                         />
                     </q-btn-group>
                 </q-td>
@@ -81,7 +82,32 @@ export default {
     },
 
     methods: {
-      ...mapActions(['getVehicles'])
+      ...mapActions(['getVehicles', 'removeVehicle']),
+
+      remove(id) {
+        this.$q.dialog({
+          title: 'Remover Veículo',
+          message: 'Você realmente gostaria de excluir esse veículo ?',
+          cancel: true
+        }).onOk(() => {
+          this.removeVehicle(id)
+          .then(() => {
+            this.$q.notify({
+              message: 'Veículo excluído com sucesso!',
+              position: 'top',
+              color: 'green-13'
+            })
+            this.getVehicles()
+          })
+          .catch (e => {
+            this.$q.notify({
+              message: 'Houve um problema, tente novamente mais tarde!',
+              position: 'top',
+              color: 'red'
+            })
+          })
+        })
+      },
     },
 
     computed: {

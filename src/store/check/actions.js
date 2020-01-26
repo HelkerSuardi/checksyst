@@ -5,5 +5,9 @@ export default {
     API.get('/checks').then(checks => {
       commit('setChecks', checks.items)
     })
+  },
+
+  removeCheck ({ commit }, checkId) {
+    API.delete(`/checks/${checkId}`)
   }
 }

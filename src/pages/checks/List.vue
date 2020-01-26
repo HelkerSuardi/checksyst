@@ -9,7 +9,7 @@
                 :columns="columns"
                 row-key="name"
             >
-                <q-td slot="body-cell-actions">
+                <q-td slot="body-cell-actions" slot-scope="props" :props="props">
                     <q-btn-group>
                         <q-btn
                             icon="info"
@@ -24,6 +24,7 @@
                         <q-btn
                             icon="delete_forever"
                             text-color="red"
+                            @click="remove(props.row.id)"
                         />
                     </q-btn-group>
                 </q-td>
@@ -94,7 +95,32 @@ export default {
     },
 
     methods: {
-      ...mapActions(['getChecks'])
+      ...mapActions(['getChecks', 'removeCheck']),
+
+      remove(id) {
+        this.$q.dialog({
+          title: 'Remover Checagem',
+          message: 'Você realmente gostaria de excluir essa checagem ?',
+          cancel: true
+        }).onOk(() => {
+          this.removeCheck(id)
+          .then(() => {
+            this.$q.notify({
+              message: 'Checagem excluída com sucesso!',
+              position: 'top',
+              color: 'green-13'
+            })
+            this.getChecks()
+          })
+          .catch (e => {
+            this.$q.notify({
+              message: 'Houve um problema, tente novamente mais tarde!',
+              position: 'top',
+              color: 'red'
+            })
+          })
+        })
+      },
     },
 
     computed: {

@@ -5,5 +5,9 @@ export default {
     API.get('/item-equips').then(itemEquips => {
       commit('setItemEquips', itemEquips.items)
     })
+  },
+
+  removeItemEquip ({ commit }, itemEquipId) {
+    API.delete(`/item-equips/${itemEquipId}`)
   }
 }
