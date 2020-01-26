@@ -1,6 +1,10 @@
 // Configuration for your app
 // https://quasar.dev/quasar-cli/quasar-conf-js
 
+const getEnvVar = variable => {
+  return JSON.stringify(process.env[variable])
+}
+
 module.exports = function (ctx) {
   return {
     // app boot file (/src/boot)
@@ -75,6 +79,10 @@ module.exports = function (ctx) {
             formatter: require('eslint').CLIEngine.getFormatter('stylish')
           }
         })
+      },
+      env: {
+        API_URL: getEnvVar('CHS_CI_API_URL'),
+        JWT_TOKEN_SECRET: getEnvVar('CHS_CI_JWT_TOKEN_SECRET'),
       }
     },
 

@@ -1,3 +1,3 @@
-export function setFirefighters (state, firefighters) {
-  state.firefighters = firefighters
+export function setItemEquips (state, itemEquips) {
+  state.itemEquips = itemEquips
 }

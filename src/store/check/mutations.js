@@ -1,3 +1,3 @@
-export function setFirefighters (state, firefighters) {
-  state.firefighters = firefighters
+export function setChecks (state, checks) {
+  state.checks = checks
 }

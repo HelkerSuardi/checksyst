@@ -84,12 +84,12 @@ export default {
         }
     },
 
-    created() {
-      this.getFirefighters()
+    async created() {
+      await this.getFirefighters()
     },
 
     methods: {
-      ...mapActions(['getFirefighters'])
+      ...mapActions(['getFirefighters']),
     },
 
     computed: {

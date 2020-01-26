@@ -1,4 +1,4 @@
-import { axiosAuthenticatedInstance } from '../service/auth-service'
+import { axiosAuthenticatedInstance } from '../boot/axios'
 
 const API = {
   get: (path, params) => axiosAuthenticatedInstance.get(path, { params }).then(({ data }) => data),

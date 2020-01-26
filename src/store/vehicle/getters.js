@@ -1,3 +1,3 @@
-export function firefighters (state) {
-  return state.firefighters
+export function vehicles (state) {
+  return state.vehicles
 }
