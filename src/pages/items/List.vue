@@ -9,7 +9,7 @@
                 :columns="columns"
                 row-key="name"
             >
-                <q-td slot="body-cell-actions">
+                <q-td slot="body-cell-actions" slot-scope="props" :props="props">
                     <q-btn-group>
                         <q-btn
                             icon="edit"
@@ -19,6 +19,7 @@
                         <q-btn
                             icon="delete_forever"
                             text-color="red"
+                            @click="remove(props.row.id)"
                         />
                     </q-btn-group>
                 </q-td>
@@ -80,7 +81,32 @@ export default {
     },
 
     methods: {
-      ...mapActions(['getItemEquips'])
+      ...mapActions(['getItemEquips', 'removeItemEquip']),
+
+      remove(id) {
+        this.$q.dialog({
+          title: 'Remover Item/Equip',
+          message: 'Você realmente gostaria de excluir esse Item/Equip ?',
+          cancel: true
+        }).onOk(() => {
+          this.removeItemEquip(id)
+          .then(() => {
+            this.$q.notify({
+              message: 'Item/Equip excluído com sucesso!',
+              position: 'top',
+              color: 'green-13'
+            })
+            this.getItemEquips()
+          })
+          .catch (e => {
+            this.$q.notify({
+              message: 'Houve um problema, tente novamente mais tarde!',
+              position: 'top',
+              color: 'red'
+            })
+          })
+        })
+      },
     },
 
     computed: {
