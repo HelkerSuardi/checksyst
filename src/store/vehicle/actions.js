@@ -9,5 +9,13 @@ export default {
 
   removeVehicle ({ commit }, vehicleId) {
     API.delete(`/vehicles/${vehicleId}`)
+  },
+
+  async createNewVehicle ({ commit }, newVehicle ){
+    try {
+      await API.post('/vehicles', newVehicle)
+    } catch (e) {
+      console.log(e)
+    }
   }
 }

@@ -1,31 +1,35 @@
 <template>
     <div>
         <q-page :padding="true">
-            <q-item-label style="font-size: 2rem" class="q-ml-md q-mb-md"> 
+            <q-item-label style="font-size: 2rem" class="q-ml-md q-mb-md">
                 Usuários
-            </q-item-label>  
+            </q-item-label>
             <form
                 method="post"
                 class="q-ml-md"
+                @submit.prevent="save"
             >
                 <div class="row q-my-form">
                     <div class="col-5 q-mb-md q-mr-md">
                         <q-input
                             label="Nome"
                             outlined
+                            v-model="firefighter.name"
+                            required
                         />
                     </div>
                     <div class="col-5 q-mb-md">
                         <q-select
                             filled
-                            v-model="vehicle"
+                            map-options
+                            emit-value
+                            v-model="firefighter.role"
                             use-input
                             input-debounce="0"
                             label="Permissão"
-                            :options="vehicleOptions"
-                            @filter="filterFn"
+                            :options="roles"
                         />
-                    </div>                     
+                    </div>
                 </div>
                 <div class="row q-my-form">
                     <div class="col-5 q-mb-md q-mr-md">
@@ -33,14 +37,18 @@
                             label="E-mail"
                             type="email"
                             outlined
+                            v-model="firefighter.email"
+                            required
                         />
-                    </div>             
+                    </div>
                     <div class="col-5 q-mb-md">
                         <q-input
                             label="R.G"
                             outlined
+                            v-model="firefighter.rg"
+                            required
                         />
-                    </div>                    
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-5 q-mb-md">
@@ -48,8 +56,10 @@
                             label="Senha"
                             type="password"
                             outlined
+                            v-model="firefighter.password"
+                            required
                         />
-                    </div>   
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-10" style="margin-left: 1rem">
@@ -62,29 +72,76 @@
                         />
                         <q-btn
                             label="Salvar"
+                            type="submit"
                             style="width: 9rem"
                             icon="save"
                             color="green-13"
                             class="float-right q-mr-md"
                         />
-                    </div>                    
+                    </div>
                 </div>
             </form>
         </q-page>
     </div>
 </template>
 <script>
+import { createNamespacedHelpers } from 'vuex'
+const { mapActions } = createNamespacedHelpers('firefighter')
 
 export default {
+    props: {
+      value: {
+        type: Object,
+        required: true
+      }
+    },
+
     data () {
         return {
-            vehicle: '',
-            vehicleOptions: [
-                'Ambulância',
-                'Caminhão-pipa',
-                'Jipe'
+            roles: [
+              {
+                label: 'Super Adm',
+                value: 'superAdm'
+              },
+              {
+                label: 'Adm',
+                value: 'adm'
+              },
+              {
+                label: 'Operador',
+                value: 'operator'
+              }
             ]
         }
     },
+
+    methods: {
+      ...mapActions(['createNewFirefighter']),
+
+      save() {
+        this.createNewFirefighter(this.firefighter)
+        .then(() => {
+          this.$q.notify({
+            message: 'Usuário criado com sucesso!',
+            color: 'green-13',
+            position: 'top'
+          })
+          this.$router.push({name: 'users'})
+        })
+        .catch(e => {
+          this.$q.notify({
+            message: 'Falha ao criar novo usuário, tente novamente mais tarde!',
+            color: 'red',
+            position: 'top'
+          })
+        })
+      }
+    },
+
+    computed: {
+      firefighter() {
+        return this.value
+      }
+    }
 }
 </script>

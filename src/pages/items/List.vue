@@ -60,7 +60,12 @@ export default {
                     label: 'Tipo',
                     align: 'left',
                     field: row => row.type,
-                    format: val => `${val}`,
+                    format: val => {
+                      if (val === 'equipment'){
+                        return 'Equipamento'
+                      }
+                      return 'Veículo'
+                    },
                     sortable: true
                 },
                 {

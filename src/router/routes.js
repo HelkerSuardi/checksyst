@@ -20,7 +20,7 @@ const routes = [
       {
         path: "users/add",
         name: "users_add",
-        component: () => import("../pages/users/Form.vue")
+        component: () => import("../pages/users/Create.vue")
       },
       //VEHICLES
       {
@@ -31,7 +31,7 @@ const routes = [
       {
         path: "vehicles/add",
         name: "vehicles_add",
-        component: () => import("../pages/vehicles/Form.vue")
+        component: () => import("../pages/vehicles/Create.vue")
       },
       //ITEMS/EQUIPS
       {
@@ -42,7 +42,7 @@ const routes = [
       {
         path: "items/add",
         name: "items_add",
-        component: () => import("../pages/items/Form.vue")
+        component: () => import("../pages/items/Create.vue")
       },
       //CHECKS
       {

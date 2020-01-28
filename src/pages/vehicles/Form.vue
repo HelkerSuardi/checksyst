@@ -7,18 +7,23 @@
             <form
                 method="post"
                 class="q-ml-md"
+                @submit.prevent="save"
             >
                 <div class="row q-my-form">
                     <div class="col-5 q-mb-md q-mr-md">
                         <q-input
                             label="Nome"
                             outlined
+                            v-model="vehicle.name"
+                            required
                         />
                     </div>
                     <div class="col-5 q-mb-md q-mr-md">
                         <q-input
                             label="Placa"
                             outlined
+                            v-model="vehicle.plaque"
+                            required
                         />
                     </div>
                 </div>
@@ -43,6 +48,7 @@
                         />
                         <q-btn
                             label="Salvar"
+                            type="submit"
                             style="width: 9rem"
                             icon="save"
                             color="green-13"
@@ -55,17 +61,44 @@
     </div>
 </template>
 <script>
+import { createNamespacedHelpers } from 'vuex'
+const { mapActions } = createNamespacedHelpers('vehicle')
 
 export default {
-    data () {
-        return {
-            vehicle: '',
-            vehicleOptions: [
-                'Ambulância',
-                'Caminhão-pipa',
-                'Jipe'
-            ]
-        }
-    },
+  props: {
+    value: {
+      type: Object,
+      required: true
+    }
+  },
+
+  methods: {
+    ...mapActions(['createNewVehicle']),
+
+    save() {
+        this.createNewVehicle(this.vehicle)
+        .then(() => {
+          this.$q.notify({
+            message: 'Veículo criado com sucesso!',
+            color: 'green-13',
+            position: 'top'
+          })
+          this.$router.push({name: 'vehicles'})
+        })
+        .catch(e => {
+          this.$q.notify({
+            message: 'Falha ao criar novo veículo, tente novamente mais tarde!',
+            color: 'red',
+            position: 'top'
+          })
+        })
+    }
+  },
+
+  computed: {
+    vehicle() {
+      return this.value
+    }
+  },
 }
 </script>
