@@ -9,5 +9,13 @@ export default {
 
   removeFirefighter ({ commit }, firefighterId) {
     API.delete(`/firefighters/${firefighterId}`)
+  },
+
+  async createNewFirefighter ({ commit }, newFirefighter ){
+    try {
+      await API.post('/firefighters', newFirefighter)
+    } catch (e) {
+      console.log(e)
+    }
   }
 }

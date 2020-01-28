@@ -60,7 +60,15 @@ export default {
                     label: 'Permissões',
                     align: 'left',
                     field: row => row.role,
-                    format: val => `${val}`,
+                    format: val => {
+                      if (val === 'superAdm') {
+                        return 'Super Adm'
+                      }
+                      if (val === 'adm') {
+                        return 'Adm'
+                      }
+                      return 'Operador'
+                    },
                     sortable: true
                 },
                 {
