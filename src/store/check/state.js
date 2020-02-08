@@ -1,3 +1,6 @@
 export default {
-  checks: []
+  checks: [],
+  vehicles: [],
+  itemsEquips: [],
+  firefighters: [],
 };

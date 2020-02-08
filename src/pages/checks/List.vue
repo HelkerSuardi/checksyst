@@ -43,6 +43,7 @@
     </div>
 </template>
 <script>
+import moment from 'moment'
 import { createNamespacedHelpers } from 'vuex'
 const { mapActions, mapGetters } = createNamespacedHelpers('check')
 
@@ -56,7 +57,9 @@ export default {
                     label: 'Data',
                     align: 'left',
                     field: row => row.date,
-                    format: val => `${val}`,
+                    format: val => {
+                      return moment(val).format('DD-MM-YYYY')
+                    },
                     sortable: true
                 },
                 {
@@ -64,8 +67,10 @@ export default {
                     required: true,
                     label: 'Hora',
                     align: 'left',
-                    field: row => row.hour,
-                    format: val => `${val}`,
+                    field: row => row.date,
+                    format: val => {
+                      return moment(val).format('HH:MM')
+                    },
                     sortable: true
                 },
                 {
@@ -73,7 +78,7 @@ export default {
                     required: true,
                     label: 'Responsável',
                     align: 'left',
-                    field: row => row.responsible,
+                    field: row => row.firefighter.name,
                     format: val => `${val}`,
                     sortable: true
                 },
