@@ -122,7 +122,7 @@ export default {
         this.createNewFirefighter(this.firefighter)
         .then(() => {
           this.$q.notify({
-            message: 'Usuário criado com sucesso!',
+            message: this.firefighter.id ? 'Usuário editado com sucesso!' : 'Usuário criado com sucesso!',
             color: 'green-13',
             position: 'top'
           })
@@ -130,7 +130,7 @@ export default {
         })
         .catch(e => {
           this.$q.notify({
-            message: 'Falha ao criar novo usuário, tente novamente mais tarde!',
+            message: 'Houve uma falha, tente novamente mais tarde!',
             color: 'red',
             position: 'top'
           })

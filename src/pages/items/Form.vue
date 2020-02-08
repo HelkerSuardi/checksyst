@@ -106,7 +106,7 @@ export default {
         this.createNewItem(this.item)
         .then(() => {
           this.$q.notify({
-            message: 'Item criado com sucesso!',
+            message: this.item.id ? 'Item editado com sucesso!' : 'Item criado com sucesso!',
             color: 'green-13',
             position: 'top'
           })
@@ -114,7 +114,7 @@ export default {
         })
         .catch(e => {
           this.$q.notify({
-            message: 'Falha ao criar novo item, tente novamente mais tarde!',
+            message: 'Houve uma falha, tente novamente mais tarde!',
             color: 'red',
             position: 'top'
           })

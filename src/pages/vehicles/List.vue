@@ -16,6 +16,7 @@
                             icon="edit"
                             color="standard"
                             text-color="primary"
+                            :to="{ name: 'vehicles_update', params: { id: props.row.id } }"
                         />
                         <q-btn
                             icon="delete_forever"
@@ -69,7 +70,7 @@ export default {
                     required: true,
                     label: 'Ações',
                     align: 'left',
-                    field: row => row.name,
+                    field: row => row.id,
                     format: val => `${val}`,
                     sortable: true
                 },

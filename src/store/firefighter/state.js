@@ -1,3 +1,4 @@
 export default {
-  firefighters: []
+  firefighters: [],
+  firefighter: ''
 };

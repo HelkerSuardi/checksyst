@@ -1,3 +1,4 @@
 export default {
-  itemEquips: []
+  itemEquips: [],
+  itemEquip: ''
 };
