@@ -53,7 +53,7 @@ const routes = [
       {
         path: "checks/add",
         name: "checks_add",
-        component: () => import("../pages/checks/Form.vue")
+        component: () => import("../pages/checks/Create.vue")
       },
 
     ]

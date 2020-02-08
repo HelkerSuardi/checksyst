@@ -1,23 +1,38 @@
 <template>
-    <div>        
+    <div>
         <q-page :padding="true">
-            <q-item-label style="font-size: 1rem" class="q-ml-md q-mb-md"> 
-                Itens selecionados 
-            </q-item-label>                          
+            <q-item-label style="font-size: 1rem" class="q-ml-md q-mb-md">
+                Itens selecionados
+            </q-item-label>
             <q-table
-                :data="data"
+                :data="selectedItemsEquips"
                 :columns="columns"
-                row-key="name"
+                row-key="id"
                 class="q-mb-md"
             >
-                <q-td slot="body-cell-actions">
-                    <q-btn-group>
+                <q-tr slot="body" slot-scope="props" :props="props">
+                  <q-td key="name" :props="props">
+                    {{ props.row.name }}
+                  </q-td>
+
+                  <q-td key="quantity" :props="props">
+                    {{ props.row.quantity }}
+                  </q-td>
+
+                  <q-td key="unity" :props="props">
+                    {{ props.row.measure }}
+                  </q-td>
+
+                  <q-td key="actions" :props="props">
+                      <div>
                         <q-btn
                             icon="delete_forever"
                             text-color="red"
+                            @click="removeItemEquip(selectedItemsEquips.indexOf(props.row))"
                         />
-                    </q-btn-group>
-                </q-td>         
+                      </div>
+                  </q-td>
+                </q-tr>
             </q-table>
             <q-btn
                 label="Cancelar"
@@ -28,17 +43,23 @@
             />
             <q-btn
                 label="Salvar"
+                :disable="selectedItemsEquips.length < 1"
                 style="width: 9rem"
                 icon="save"
                 color="green-13"
                 class="float-right q-mr-md"
+                @click="save"
             />
-            
+
         </q-page>
     </div>
 </template>
 <script>
 export default {
+    props: {
+      selectedItemsEquips: Array,
+    },
+
     data () {
         return {
              columns: [
@@ -65,28 +86,27 @@ export default {
                     required: true,
                     label: 'Unidade',
                     align: 'left',
-                    field: row => row.unity,
+                    field: row => row.measure,
                     format: val => `${val}`,
                     sortable: true
                 },
                 {
                     name: 'actions',
-                    required: true,
+                    required: false,
                     label: 'Ações',
                     align: 'left',
-                    field: row => row.name,
-                    format: val => `${val}`,
-                    sortable: true
                 },
             ],
-            data: [
-                {
-                    name: '10/10/20',
-                    quantity: '17:53',
-                    unity: 'Helker',                    
-                }
-            ]
         }
+    },
+
+    methods: {
+      removeItemEquip(index) {
+        this.$emit('removeItemEquip', index)
+      },
+      save() {
+        this.$emit('save')
+      }
     }
 }
 </script>
