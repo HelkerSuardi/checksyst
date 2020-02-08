@@ -15,6 +15,7 @@
                             icon="edit"
                             color="standard"
                             text-color="primary"
+                            :to="{ name: 'items_update', params: { id: props.row.id } }"
                         />
                         <q-btn
                             icon="delete_forever"
@@ -66,6 +67,14 @@ export default {
                       }
                       return 'Veículo'
                     },
+                    sortable: true
+                },
+                {
+                    name: 'measure',
+                    required: true,
+                    label: 'Unidade de medida',
+                    align: 'left',
+                    field: row => row.measure,
                     sortable: true
                 },
                 {

@@ -79,7 +79,7 @@ export default {
         this.createNewVehicle(this.vehicle)
         .then(() => {
           this.$q.notify({
-            message: 'Veículo criado com sucesso!',
+            message: this.vehicle.id ? 'Veículo editado com sucesso' : 'Veículo criado com sucesso!',
             color: 'green-13',
             position: 'top'
           })
@@ -87,7 +87,7 @@ export default {
         })
         .catch(e => {
           this.$q.notify({
-            message: 'Falha ao criar novo veículo, tente novamente mais tarde!',
+            message: 'Houve uma falha, tente novamente mais tarde!',
             color: 'red',
             position: 'top'
           })

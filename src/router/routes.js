@@ -22,6 +22,11 @@ const routes = [
         name: "users_add",
         component: () => import("../pages/users/Create.vue")
       },
+      {
+        path: "users/update",
+        name: "users_update",
+        component: () => import("../pages/users/Update.vue")
+      },
       //VEHICLES
       {
         path: "vehicles",
@@ -32,6 +37,11 @@ const routes = [
         path: "vehicles/add",
         name: "vehicles_add",
         component: () => import("../pages/vehicles/Create.vue")
+      },
+      {
+        path: "vehicles/update",
+        name: "vehicles_update",
+        component: () => import("../pages/vehicles/Update.vue")
       },
       //ITEMS/EQUIPS
       {
@@ -44,6 +54,11 @@ const routes = [
         name: "items_add",
         component: () => import("../pages/items/Create.vue")
       },
+      {
+        path: "items/update",
+        name: "items_update",
+        component: () => import("../pages/items/Update.vue")
+      },
       //CHECKS
       {
         path: "checks",
@@ -55,7 +70,11 @@ const routes = [
         name: "checks_add",
         component: () => import("../pages/checks/Create.vue")
       },
-
+      {
+        path: "checks/update",
+        name: "checks_update",
+        component: () => import("../pages/checks/Update.vue")
+      },
     ]
   },
   {

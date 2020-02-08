@@ -15,6 +15,7 @@
                             icon="edit"
                             color="standard"
                             text-color="primary"
+                            :to="{ name: 'users_update', params: { id: props.row.id } }"
                         />
                         <q-btn
                             icon="delete_forever"
