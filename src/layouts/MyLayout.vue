@@ -30,7 +30,6 @@
           v-for="menu in menu"
           :key="menu.name"
           :to="{ name: menu.route }"
-
         >
           <q-item-section avatar>
             <q-icon :name="menu.icon" />
@@ -101,7 +100,7 @@ export default {
       }
 
       return false
-    }
+    },
   },
 
   computed: {
