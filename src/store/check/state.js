@@ -3,4 +3,5 @@ export default {
   vehicles: [],
   itemsEquips: [],
   firefighters: [],
+  check: ''
 };

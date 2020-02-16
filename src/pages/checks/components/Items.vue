@@ -12,7 +12,7 @@
             >
                 <q-tr slot="body" slot-scope="props" :props="props">
                   <q-td key="name" :props="props">
-                    {{ props.row.name }}
+                    {{ props.row.item ? props.row.item.name : props.row.name }}
                   </q-td>
 
                   <q-td key="quantity" :props="props">
@@ -20,7 +20,7 @@
                   </q-td>
 
                   <q-td key="unity" :props="props">
-                    {{ props.row.measure }}
+                    {{ props.row.item ? props.row.item.measure : props.row.measure }}
                   </q-td>
 
                   <q-td key="actions" :props="props">

@@ -2,6 +2,10 @@ export function setChecks (state, checks) {
   state.checks = checks
 }
 
+export function setCheck (state, check) {
+  state.check = check
+}
+
 export function setVehicles (state, vehicles) {
   state.vehicles = vehicles
 }
