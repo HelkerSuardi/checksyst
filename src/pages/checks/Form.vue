@@ -9,25 +9,31 @@
                     <q-select
                         filled
                         use-input
-                        v-model="check.vehicle"
+                        :value="check.vehicle._id ? check.vehicle._id : check.vehicle"
                         input-debounce="0"
                         map-options
                         emit-value
                         label="Veículo"
                         :options="vehicleOptions()"
-                        @input="value => loadVehicleItems(value)"
+                        @input="value => {
+                          check.vehicle._id ? check.vehicle._id = value : check.vehicle = value
+                          loadVehicleItems(value)
+                        }"
                     />
                 </div>
                 <div class="col-5 q-mb-md">
                     <q-select
                         filled
                         use-input
-                        v-model="check.firefighter"
+                        :value="check.firefighter._id ? check.firefighter._id : check.firefighter"
                         input-debounce="0"
                         map-options
                         emit-value
                         label="Bombeiro responsável"
                         :options="firefighterOptions()"
+                        @input="value => {
+                          check.firefighter._id ? check.firefighter._id = value : check.firefighter = value
+                        }"
                     />
                 </div>
             </div>
@@ -44,11 +50,11 @@
                     </q-input>
                 </div>
                 <div class="col-5 q-mb-md q-mr-md">
-                    <q-input label="Data" filled v-model="date" mask="date" :rules="['date']">
+                    <q-input label="Data" filled v-model="date">
                       <template v-slot:append>
                         <q-icon name="event" class="cursor-pointer">
                           <q-popup-proxy ref="qDateProxy" transition-show="scale" transition-hide="scale">
-                            <q-date v-model="date" @input="() => $refs.qDateProxy.hide()" />
+                            <q-date v-model="date" mask="DD/MM/YYYY"  @input="() => $refs.qDateProxy.hide()" />
                           </q-popup-proxy>
                         </q-icon>
                       </template>
@@ -126,10 +132,32 @@ export default {
     }
   },
 
+  async created() {
+    await this.load()
+  },
+
   methods: {
     ...mapActions(['saveCheckAndUpdateVehicle', 'getVehicle']),
 
+    load() {
+      if (!this.check.id) {
+        return
+      }
+
+      const dateToUtc = moment(this.check.date).subtract(3, 'hours').toISOString()
+
+      const date = moment(dateToUtc.split('T', 1)[0]).format('DD/MM/YYYY')
+      const time = dateToUtc.split('T')[1].split('.', 1)[0]
+      this.time = time
+      this.date = date
+
+      this.selectedItemsEquips = this.check.itemsEquips
+
+    },
+
     async loadVehicleItems(vehicleId) {
+      this.selectedItemsEquips = []
+
       const vehicle = this.vehicles.find(vehicle => {
         return vehicle.id.toString() === vehicleId.toString()
       })
@@ -180,7 +208,10 @@ export default {
     },
 
     save() {
-      const timeAndDate = `${this.date} ${this.time}`
+      const date = this.date.split('/')
+      const formatedDate = date[2] + '/' + date[1] + '/' + date[0]
+
+      const timeAndDate = `${formatedDate} ${this.time}`
       this.check.date = moment(timeAndDate)
 
       this.saveCheckAndUpdateVehicle({

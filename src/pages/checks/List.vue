@@ -20,6 +20,7 @@
                             icon="edit"
                             color="standard"
                             text-color="primary"
+                            :to="{ name: 'checks_update', params: { id: props.row.id } }"
                         />
                         <q-btn
                             icon="delete_forever"
@@ -29,7 +30,7 @@
                     </q-btn-group>
                 </q-td>
                 <template slot= "top-right">
-                    <q-input v-model="filter" placeholder="Procurar">
+                    <q-input placeholder="Procurar">
                         <template v-slot:append>
                             <q-icon name="search" />
                         </template>
@@ -58,7 +59,7 @@ export default {
                     align: 'left',
                     field: row => row.date,
                     format: val => {
-                      return moment(val).format('DD-MM-YYYY')
+                      return moment(val).format('DD/MM/YYYY')
                     },
                     sortable: true
                 },
@@ -69,7 +70,8 @@ export default {
                     align: 'left',
                     field: row => row.date,
                     format: val => {
-                      return moment(val).format('HH:MM')
+                      const date = moment(val)
+                      return date.format('HH:mm')
                     },
                     sortable: true
                 },

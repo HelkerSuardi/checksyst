@@ -7,6 +7,12 @@ export default {
     })
   },
 
+  getCheck ({ commit }, checkId) {
+    API.get(`/checks/${checkId}`).then(check => {
+      commit('setCheck', check)
+    })
+  },
+
   removeCheck ({ commit }, checkId) {
     API.delete(`/checks/${checkId}`)
   },
@@ -43,6 +49,17 @@ export default {
         quantity: itemEquip.quantity
       }
     })
+
+    if (items.check.id) {
+      try {
+        API.put(`/checks/${items.check.id}`, items.check)
+        API.put(`/vehicles/${items.check.vehicle._id}`, {item})
+        return
+      } catch (e) {
+        console.log(e)
+        return
+      }
+    }
 
     try {
       API.post('/checks', items.check)
