@@ -56,7 +56,6 @@ const loggedIn = async () => {
     if (!token) {
         return false;
     }
-
     try {
         return await jwt.verify(token, JWT_TOKEN_SECRET);
     } catch (e) {
