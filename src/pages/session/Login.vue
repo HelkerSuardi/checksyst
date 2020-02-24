@@ -50,19 +50,15 @@ export default {
         const { token, data } = response.data
         authService.login({
           token,
-          name: data.name
+          name: data.name,
+          id: data._id,
+          role: data.role
         })
 
-        const redirect = this.$route.query.redirect
-        if (redirect) {
-          this.$router.push({
-            path: redirect
-          })
-        } else {
-          this.$router.push({
-            name: 'checks'
-          })
-        }
+        this.$router.push({
+          name: 'checks'
+        })
+
         this.$q.notify({
           message: 'Login efetuado com sucesso!',
           position: 'top',
