@@ -1,6 +1,6 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
+    <q-header elevated class="bg-dark">
       <q-toolbar>
         <q-btn
           flat
@@ -22,12 +22,15 @@
       v-model="leftDrawerOpen"
       show-if-above
       bordered
-      content-class="bg-grey-2"
+      content-class="bg-dark text-white"
     >
+      <h5 class="column items-center">
+        {{ 'Bem-vindo ' + username }}
+      </h5>
       <q-list>
         <q-item
           clickable
-          v-for="menu in menu"
+          v-for="menu in allowedMenus"
           :key="menu.name"
           :to="{ name: menu.route }"
         >
@@ -58,25 +61,25 @@ export default {
       leftDrawerOpen: false,
       menu: [
         {
-          name: 'Menu Usuários',
-          allowedRoles: ['superAdm'],
-          icon: 'people_outline',
+          name: authService.getRole() === 'superAdm' ? 'Usuários' : 'Meus dados',
+          allowedRoles: ['superAdm', 'adm'],
+          icon: authService.getRole() === 'superAdm' ? 'people' : 'person',
           route: 'users'
         },
         {
-          name: 'Menu Veículos',
+          name: 'Veículos',
           allowedRoles: ['superAdm'],
           icon: 'directions_car',
           route: 'vehicles'
         },
         {
-          name: 'Menu Itens/Equips',
+          name: 'Itens/Equipamentos',
           allowedRoles: ['superAdm'],
           icon: 'build',
           route: 'items'
         },
         {
-          name: 'Menu Checagens',
+          name: 'Checagens',
           allowedRoles: ['superAdm', 'adm'],
           icon: 'check_circle_outline',
           route: 'checks'
@@ -106,6 +109,10 @@ export default {
   computed: {
     allowedMenus () {
       return this.menu.filter(itemMenu => this.canSeeMenu(itemMenu.allowedRoles))
+    },
+
+    username() {
+      return authService.getUsername()
     }
   }
 };

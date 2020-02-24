@@ -53,6 +53,7 @@
                 <div class="row">
                     <div class="col-5 q-mb-md">
                         <q-input
+                            v-if="userId === firefighter.id"
                             label="Senha"
                             type="password"
                             outlined
@@ -87,6 +88,7 @@
 <script>
 import { createNamespacedHelpers } from 'vuex'
 const { mapActions } = createNamespacedHelpers('firefighter')
+import authService from '../../service/auth-service'
 
 export default {
     props: {
@@ -141,6 +143,10 @@ export default {
     computed: {
       firefighter() {
         return this.value
+      },
+
+      userId() {
+        return authService.getId()
       }
     }
 }
