@@ -8,16 +8,16 @@ const USERNAME_KEY = process.env.USERNAME_KEY || '_chs_username_';
 const JWT_TOKEN_SECRET = process.env.JWT_TOKEN_SECRET;
 
 const login = data => {
-    const { token, name, _id } = data;
+    const { token, name, id, role } = data;
     localStorage.setItem(TOKEN_KEY, token);
     localStorage.setItem(USERNAME_KEY, name);
-    localStorage.setItem(ID_KEY, _id);
+    localStorage.setItem(ID_KEY, id);
+    localStorage.setItem('_chs_role', role);
 };
 
 const logout = () => {
     localStorage.removeItem(TOKEN_KEY);
     localStorage.removeItem(USERNAME_KEY);
-    localStorage.removeItem(ID_KEY);
     sessionStorage.clear();
     window.location.href = '/login';
 };
@@ -25,6 +25,10 @@ const logout = () => {
 const getId = () => {
     return localStorage.getItem(ID_KEY);
 };
+
+const getRole = () => {
+  return localStorage.getItem('_chs_role')
+}
 
 const getToken = () => {
     return localStorage.getItem(TOKEN_KEY);
@@ -68,6 +72,7 @@ export default {
     logout,
     loggedIn,
     getId,
+    getRole,
     getToken,
     getUsername,
     hasRole
