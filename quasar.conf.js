@@ -85,7 +85,7 @@ module.exports = function (ctx) {
       },
       env: {
         API_URL: getEnvVar('CHS_CI_API_URL'),
-        JWT_TOKEN_SECRET: getEnvVar('CHS_CI_JWT_TOKEN_SECRET'),
+        JWT_TOKEN_SECRET: getEnvVar('CHS_DEVELOPMENT_JWT_TOKEN_SECRET'),
       }
     },
 
