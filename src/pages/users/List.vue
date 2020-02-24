@@ -5,7 +5,7 @@
                 Usuários
             </q-item-label>
             <q-table
-                :data="firefighters"
+                :data="role === 'superAdm' ? firefighters : [firefighter]"
                 :columns="columns"
                 row-key="name"
             >
@@ -24,7 +24,7 @@
                         />
                     </q-btn-group>
                 </q-td>
-                <template slot= "top-right">
+                <template v-if="role === 'superAdm'" slot= "top-right">
                     <q-input placeholder="Procurar">
                         <template v-slot:append>
                             <q-icon name="search" />
@@ -41,6 +41,7 @@
 <script>
 import { createNamespacedHelpers } from 'vuex'
 const { mapActions, mapGetters } = createNamespacedHelpers('firefighter')
+import authService from '../../service/auth-service'
 
 export default {
     data () {
@@ -91,15 +92,26 @@ export default {
                     sortable: true
                 },
             ],
+            role: ''
         }
     },
 
     async created() {
-      await this.getFirefighters()
+      await this.buildDataTable()
     },
 
     methods: {
-      ...mapActions(['getFirefighters', 'removeFirefighter']),
+      ...mapActions(['getFirefighters', 'getFirefighter', 'removeFirefighter']),
+
+      async buildDataTable() {
+        this.role = authService.getRole()
+        if (this.role === 'superAdm') {
+          await this.getFirefighters()
+          return
+        }
+
+        await this.getFirefighter(authService.getId())
+      },
 
       remove(id) {
         this.$q.dialog({
@@ -128,7 +140,7 @@ export default {
     },
 
     computed: {
-      ...mapGetters(['firefighters'])
+      ...mapGetters(['firefighters', 'firefighter'])
     }
 }
 </script>
