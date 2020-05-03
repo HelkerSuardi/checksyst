@@ -4,7 +4,7 @@
         <h3 class="text-white">CheckSyst</h3>
       </div>
       <div class="absolute-center" style="heigth: 30%; width: 30%">
-        <div class="q-pa-xl bg-white">
+        <div class="q-pa-xl bg-white" style="border-radius: 5px">
           <q-form class="q-gutter-md" @submit.prevent="login">
             <q-input
               outlined
@@ -39,7 +39,7 @@ import authService from '../../service/auth-service'
 export default {
   data () {
     return {
-      email: 'teste@login.com',
+      email: 'admin@admin.com',
       password: '123'
     }
   },

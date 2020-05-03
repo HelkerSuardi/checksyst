@@ -27,16 +27,6 @@
                         />
                     </div>
                 </div>
-                <div class="row q-my-form">
-                    <div class="col-5 q-mb-md q-mr-md">
-                        <q-input
-                            @input="val => { files = val }"
-                            multiple
-                            filled
-                            type="file"
-                        />
-                    </div>
-                </div>
                 <div class="row">
                     <div class="col-10" style="margin-left: 1rem">
                         <q-btn

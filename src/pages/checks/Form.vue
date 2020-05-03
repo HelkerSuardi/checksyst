@@ -39,17 +39,6 @@
             </div>
             <div class="row q-my-form">
                 <div class="col-5 q-mb-md q-mr-md">
-                    <q-input label="Hora" filled v-model="time" mask="time" :rules="['time']">
-                      <template v-slot:append>
-                        <q-icon name="access_time" class="cursor-pointer">
-                          <q-popup-proxy transition-show="scale" transition-hide="scale">
-                            <q-time v-model="time" />
-                          </q-popup-proxy>
-                        </q-icon>
-                      </template>
-                    </q-input>
-                </div>
-                <div class="col-5 q-mb-md q-mr-md">
                     <q-input label="Data" filled v-model="date">
                       <template v-slot:append>
                         <q-icon name="event" class="cursor-pointer">
@@ -85,7 +74,7 @@
                     <q-btn
                         icon="add"
                         color="green-13"
-                        :disable="itemEquipQuantity < 1 || check.vehicle === '' || itemEquipUnity === '' || date === '' || time === '' "
+                        :disable="itemEquipQuantity < 1 || check.vehicle === '' || itemEquipUnity === '' || date === '' "
                         @click="addItemToList"
                     />
                 </div>
@@ -162,7 +151,7 @@ export default {
         return vehicle.id.toString() === vehicleId.toString()
       })
 
-      const vehicleItems = vehicle.item
+      const vehicleItems = vehicle.itemsEquips
 
       vehicleItems.forEach(vi => {
         this.selectedItemsEquips.push({...vi.item, quantity: vi.quantity})

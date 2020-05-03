@@ -78,6 +78,14 @@ export default {
                     sortable: true
                 },
                 {
+                    name: 'description',
+                    required: true,
+                    label: 'Descrição',
+                    align: 'left',
+                    field: row => row.description,
+                    sortable: true
+                },
+                {
                     name: 'actions',
                     required: true,
                     label: 'Ações',
