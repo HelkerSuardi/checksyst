@@ -15,6 +15,7 @@
                             icon="info"
                             color="standard"
                             text-color="secondary"
+                            @click="showPdf(props.row)"
                         />
                         <q-btn
                             icon="edit"
@@ -46,6 +47,10 @@
 <script>
 import moment from 'moment'
 import { createNamespacedHelpers } from 'vuex'
+import pdfMake from "pdfmake/build/pdfmake";
+import pdfFonts from "pdfmake/build/vfs_fonts";
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
+
 const { mapActions, mapGetters } = createNamespacedHelpers('check')
 
 export default {
@@ -128,6 +133,59 @@ export default {
           })
         })
       },
+
+      showPdf (check) {
+        const formatedCheckDataForPdf = this.generatePdfContent(check.itemsEquips)
+
+        const docDefinition = {
+          info: {
+            title: 'Checagem ' + moment(check.date).format('DD/MM/YYYY'),
+            subject: 'Checagem'
+          },
+          header: function(currentPage, pageCount, pageSize) {
+            return [
+              { text: 'RELATÓRIO DE CHECAGEM', alignment: 'center', margin: 15, bold: true, fontSize: 15 },
+            ]
+          },
+          content: [
+            {
+              columns: [
+                { text: 'Responsável: ' + check.firefighter.name, bold: true, margin: 15, alignment: 'left' },
+                { text: 'Veículo: ' + check.vehicle.name, bold: true, margin: 15 },
+                { text: 'Data: ' + moment(check.date).format('DD/MM/YYYY'), bold: true, margin: 15 }
+              ]
+            },
+            {
+              layout: 'lightHorizontalLines',
+              table: {
+                headerRows: 1,
+                widths: [ '*', '*', '*' ],
+
+                body: [
+                  [
+                    { text: 'Nome', bold: true },
+                    { text: 'Quantidade', bold: true },
+                    { text: 'Status', bold: true },
+                  ],
+                  ...formatedCheckDataForPdf
+                ]
+              }
+            }
+          ]
+        }
+        pdfMake.createPdf(docDefinition).open();
+
+      },
+
+      generatePdfContent (checkItems) {
+        let formatedItemsEquips = []
+
+        for (const itemEquip of checkItems) {
+          formatedItemsEquips.push([itemEquip.item.name, itemEquip.quantity, itemEquip.status ? 'Ok' : 'Pendente'])
+        }
+
+        return formatedItemsEquips
+      }
     },
 
     computed: {
