@@ -43,7 +43,7 @@ export default {
       })
     })
 
-    const item = items.selectedItemsEquips.map(itemEquip => {
+    const itemsEquips = items.selectedItemsEquips.map(itemEquip => {
       return {
         item: itemEquip.value,
         quantity: itemEquip.quantity
@@ -53,7 +53,7 @@ export default {
     if (items.check.id) {
       try {
         API.put(`/checks/${items.check.id}`, items.check)
-        API.put(`/vehicles/${items.check.vehicle._id}`, {item})
+        API.put(`/vehicles/${items.check.vehicle._id}`, {itemsEquips})
         return
       } catch (e) {
         console.log(e)

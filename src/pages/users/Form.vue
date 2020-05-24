@@ -53,7 +53,7 @@
                 <div class="row">
                     <div class="col-5 q-mb-md">
                         <q-input
-                            v-if="userId === firefighter.id"
+                            v-if="userId === firefighter.id || !firefighter.id"
                             label="Senha"
                             type="password"
                             outlined

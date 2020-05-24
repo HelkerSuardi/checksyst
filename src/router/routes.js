@@ -103,6 +103,12 @@ const routes = [
     meta: { requiresAuth: false },
     component: () => import("../pages/session/Logout.vue")
   },
+  // {
+  //   path: '/reset-password',
+  //   name: 'reset_password',
+  //   meta: { requiresAuth: false },
+  //   component: () => import('../pages/session/ForgotPassword.vue')
+  // }
 
 ];
 
