@@ -13,8 +13,9 @@ export default {
     })
   },
 
-  removeCheck ({ commit }, checkId) {
+  removeCheck ({ dispatch }, checkId) {
     API.delete(`/checks/${checkId}`)
+    dispatch('getChecks')
   },
 
   getVehicles ({ commit }) {
@@ -35,25 +36,12 @@ export default {
     })
   },
 
-  async saveCheckAndUpdateVehicle ({ commit }, items) {
-    items.selectedItemsEquips.forEach(itemEquip => {
-      items.check.itemsEquips.push({
-        item: itemEquip.value,
-        quantity: itemEquip.quantity
-      })
-    })
-
-    const itemsEquips = items.selectedItemsEquips.map(itemEquip => {
-      return {
-        item: itemEquip.value,
-        quantity: itemEquip.quantity
-      }
-    })
-
-    if (items.check.id) {
+  async saveCheckAndUpdateVehicle ({ commit }, { check }) {
+    console.log(check)
+    if (check.id) {
       try {
-        API.put(`/checks/${items.check.id}`, items.check)
-        API.put(`/vehicles/${items.check.vehicle._id}`, {itemsEquips})
+        await API.put(`/checks/${check.id}`, check)
+        await API.put(`/vehicles/${check.vehicle._id}`, {itemsEquips: check.itemsEquips})
         return
       } catch (e) {
         console.log(e)
@@ -62,8 +50,8 @@ export default {
     }
 
     try {
-      API.post('/checks', items.check)
-      API.put(`/vehicles/${items.check.vehicle}`, {item})
+      await API.post('/checks', check)
+      await API.put(`/vehicles/${check.vehicle}`, {itemsEquips: check.itemsEquips})
     } catch (e) {
       console.log(e)
     }

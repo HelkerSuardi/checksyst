@@ -1,18 +1,16 @@
 <template>
     <div>
         <q-page :padding="true">
-            <q-item-label style="font-size: 1rem" class="q-ml-md q-mb-md">
-                Itens selecionados
-            </q-item-label>
             <q-table
                 :data="selectedItemsEquips"
                 :columns="columns"
                 row-key="id"
                 class="q-mb-md"
+                title="Itens Selecionados"
             >
                 <q-tr slot="body" slot-scope="props" :props="props">
                   <q-td key="name" :props="props">
-                    {{ props.row.item ? props.row.item.name : props.row.name }}
+                    {{ props.row.item.name ? props.row.item.name : props.row.label }}
                   </q-td>
 
                   <q-td key="quantity" :props="props">
@@ -20,7 +18,7 @@
                   </q-td>
 
                   <q-td key="unity" :props="props">
-                    {{ props.row.item ? props.row.item.measure : props.row.measure }}
+                    {{ props.row.item.measure ? props.row.item.measure : props.row.measure }}
                   </q-td>
 
                   <q-td key="actions" :props="props">
