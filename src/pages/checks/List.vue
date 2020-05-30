@@ -69,18 +69,6 @@ export default {
                     sortable: true
                 },
                 {
-                    name: 'hour',
-                    required: true,
-                    label: 'Hora',
-                    align: 'left',
-                    field: row => row.date,
-                    format: val => {
-                      const date = moment(val)
-                      return date.format('HH:mm')
-                    },
-                    sortable: true
-                },
-                {
                     name: 'responsible',
                     required: true,
                     label: 'Responsável',
@@ -90,10 +78,19 @@ export default {
                     sortable: true
                 },
                 {
+                    name: 'vehicle',
+                    required: true,
+                    label: 'Veículo',
+                    align: 'left',
+                    field: row => row.vehicle.name,
+                    format: val => `${val}`,
+                    sortable: true
+                },
+                {
                     name: 'actions',
                     required: true,
                     label: 'Ações',
-                    align: 'left',
+                    align: 'center',
                     field: row => row.name,
                     format: val => `${val}`,
                     sortable: true

@@ -32,22 +32,17 @@
                         label="Bombeiro responsável"
                         :options="firefighterOptions()"
                         @input="value => {
-                          check.firefighter._id ? check.firefighter._id = value : check.firefighter = value
+                          check.firefighter = value
                         }"
                     />
                 </div>
             </div>
             <div class="row q-my-form">
                 <div class="col-5 q-mb-md q-mr-md">
-                    <q-input label="Data" filled v-model="date">
-                      <template v-slot:append>
-                        <q-icon name="event" class="cursor-pointer">
-                          <q-popup-proxy ref="qDateProxy" transition-show="scale" transition-hide="scale">
-                            <q-date v-model="date" mask="DD/MM/YYYY"  @input="() => $refs.qDateProxy.hide()" />
-                          </q-popup-proxy>
-                        </q-icon>
-                      </template>
-                    </q-input>
+                    <base-date
+                      v-model="check.date"
+                      @date-changed="date => check.date = date"
+                    />
                 </div>
             </div>
             <div class="row q-my-form">
@@ -74,15 +69,16 @@
                     <q-btn
                         icon="add"
                         color="green-13"
-                        :disable="itemEquipQuantity < 1 || check.vehicle === '' || itemEquipUnity === '' || date === '' "
+                        :disable="itemEquipQuantity < 1 || check.vehicle === '' || itemEquipUnity === '' || check.date === '' "
                         @click="addItemToList"
                     />
                 </div>
             </div>
             <list-of-items
+              v-if="check.itemsEquips.length > 0"
               @save="save"
               @removeItemEquip="removeItemEquip"
-              :selectedItemsEquips="selectedItemsEquips"
+              :selectedItemsEquips="check.itemsEquips"
             />
 
         </q-page>
@@ -93,6 +89,7 @@ import moment from 'moment'
 import { createNamespacedHelpers } from 'vuex'
 const { mapActions, mapGetters } = createNamespacedHelpers('check')
 import ListOfItems from './components/Items'
+import BaseDate from '../../components/BaseDate'
 
 export default {
   props: {
@@ -121,46 +118,19 @@ export default {
     }
   },
 
-  async created() {
-    await this.load()
-  },
-
   methods: {
     ...mapActions(['saveCheckAndUpdateVehicle', 'getVehicle']),
 
-    load() {
-      if (!this.check.id) {
-        return
-      }
-
-      const dateToUtc = moment(this.check.date).subtract(3, 'hours').toISOString()
-
-      const date = moment(dateToUtc.split('T', 1)[0]).format('DD/MM/YYYY')
-      const time = dateToUtc.split('T')[1].split('.', 1)[0]
-      this.time = time
-      this.date = date
-
-      this.selectedItemsEquips = this.check.itemsEquips
-
-    },
-
     async loadVehicleItems(vehicleId) {
-      this.selectedItemsEquips = []
-
       const vehicle = this.vehicles.find(vehicle => {
         return vehicle.id.toString() === vehicleId.toString()
       })
 
-      const vehicleItems = vehicle.itemsEquips
-
-      vehicleItems.forEach(vi => {
-        this.selectedItemsEquips.push({...vi.item, quantity: vi.quantity})
-      })
-
+      this.check.itemsEquips = vehicle.itemsEquips
     },
 
     removeItemEquip(index) {
-      this.selectedItemsEquips.splice(index, 1)
+      this.check.itemsEquips.splice(index, 1)
     },
 
     vehicleOptions() {
@@ -193,19 +163,12 @@ export default {
     },
 
     addItemToList() {
-      this.selectedItemsEquips.push({...this.itemEquipUnity, quantity: this.itemEquipQuantity})
+      this.check.itemsEquips.push({ item: this.itemEquipUnity.value, measure: this.itemEquipUnity.measure, label: this.itemEquipUnity.name,  quantity: this.itemEquipQuantity})
     },
 
-    save() {
-      const date = this.date.split('/')
-      const formatedDate = date[2] + '/' + date[1] + '/' + date[0]
-
-      const timeAndDate = `${formatedDate} ${this.time}`
-      this.check.date = moment(timeAndDate)
-
-      this.saveCheckAndUpdateVehicle({
-        check: this.check,
-        selectedItemsEquips: this.selectedItemsEquips
+    async save() {
+      await this.saveCheckAndUpdateVehicle({
+        check: this.check
       })
       .then(() => {
         this.$q.notify({
@@ -234,7 +197,8 @@ export default {
   },
 
   components: {
-      ListOfItems
+      ListOfItems,
+      BaseDate
   }
 }
 </script>
