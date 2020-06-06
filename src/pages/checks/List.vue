@@ -15,6 +15,7 @@
                     <q-btn-group>
                         <q-btn
                             icon="info"
+                            :disable="props.row.status === 'OK'"
                             color="standard"
                             text-color="secondary"
                             @click="showPdf(props.row)"
