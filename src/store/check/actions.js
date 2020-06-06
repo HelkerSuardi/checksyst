@@ -1,8 +1,9 @@
 import API from '../api'
 
 export default {
-  getChecks ({ commit }) {
-    API.get('/checks').then(checks => {
+  getChecks ({ commit }, params) {
+    API.get('/checks', { params }).then(checks => {
+      commit('setTotalOfPages', checks.lastPage)
       commit('setChecks', checks.items)
     })
   },

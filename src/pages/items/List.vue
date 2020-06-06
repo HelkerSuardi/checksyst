@@ -8,6 +8,8 @@
                 :data="itemEquips"
                 :columns="columns"
                 row-key="name"
+                hide-bottom
+                :pagination="{ rowsPerPage: 10 }"
             >
                 <q-td slot="body-cell-actions" slot-scope="props" :props="props">
                     <q-btn-group>
@@ -25,7 +27,7 @@
                     </q-btn-group>
                 </q-td>
                 <template slot= "top-right">
-                    <q-input v-model="filter" placeholder="Procurar">
+                    <q-input v-model="searchItemsName" placeholder="Procurar">
                         <template v-slot:append>
                             <q-icon name="search" />
                         </template>
@@ -36,6 +38,14 @@
                 </div>
             </q-table>
         </q-page>
+        <div class="row justify-center" v-if="totalOfPages > 1">
+            <q-pagination
+              v-model="page"
+              color="grey-8"
+              :max="totalOfPages"
+              size="sm"
+            />
+        </div>
     </div>
 </template>
 <script>
@@ -45,61 +55,63 @@ const { mapActions, mapGetters } = createNamespacedHelpers('itemEquip')
 export default {
     data () {
         return {
-             columns: [
-                {
-                    name: 'name',
-                    required: true,
-                    label: 'Nome',
-                    align: 'left',
-                    field: row => row.name,
-                    format: val => `${val}`,
-                    sortable: true
-                },
-                {
-                    name: 'type',
-                    required: true,
-                    label: 'Tipo',
-                    align: 'left',
-                    field: row => row.type,
-                    format: val => {
-                      if (val === 'equipment'){
-                        return 'Equipamento'
-                      }
-                      return 'Veículo'
-                    },
-                    sortable: true
-                },
-                {
-                    name: 'measure',
-                    required: true,
-                    label: 'Unidade de medida',
-                    align: 'left',
-                    field: row => row.measure,
-                    sortable: true
-                },
-                {
-                    name: 'description',
-                    required: true,
-                    label: 'Descrição',
-                    align: 'left',
-                    field: row => row.description,
-                    sortable: true
-                },
-                {
-                    name: 'actions',
-                    required: true,
-                    label: 'Ações',
-                    align: 'left',
-                    field: row => row._id,
-                    format: val => `${val}`,
-                    sortable: true
-                },
-            ],
+          searchItemsName: '',
+          page: 1,
+          columns: [
+              {
+                  name: 'name',
+                  required: true,
+                  label: 'Nome',
+                  align: 'left',
+                  field: row => row.name,
+                  format: val => `${val}`,
+                  sortable: true
+              },
+              {
+                  name: 'type',
+                  required: true,
+                  label: 'Tipo',
+                  align: 'left',
+                  field: row => row.type,
+                  format: val => {
+                    if (val === 'equipment'){
+                      return 'Equipamento'
+                    }
+                    return 'Veículo'
+                  },
+                  sortable: true
+              },
+              {
+                  name: 'measure',
+                  required: true,
+                  label: 'Unidade de medida',
+                  align: 'left',
+                  field: row => row.measure,
+                  sortable: true
+              },
+              {
+                  name: 'description',
+                  required: true,
+                  label: 'Descrição',
+                  align: 'left',
+                  field: row => row.description,
+                  sortable: true
+              },
+              {
+                  name: 'actions',
+                  required: true,
+                  label: 'Ações',
+                  align: 'left',
+                  field: row => row._id,
+                  format: val => `${val}`,
+                  sortable: true
+              },
+          ],
         }
     },
 
     async created() {
-      this.getItemEquips()
+      await this.getItemEquips({ name: this.searchItemsName, page: this.page })
     },
 
     methods: {
@@ -132,7 +144,17 @@ export default {
     },
 
     computed: {
-      ...mapGetters(['itemEquips'])
+      ...mapGetters(['itemEquips', 'totalOfPages'])
+    },
+
+    watch: {
+      searchItemsName() {
+        this.getItemEquips({ name: this.searchItemsName, page: this.page })
+      },
+
+      page() {
+        this.getItemEquips({ name: this.searchItemsName, page: this.page })
+      }
     }
 }
 </script>

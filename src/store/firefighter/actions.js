@@ -1,8 +1,9 @@
 import API from '../api'
 
 export default {
-  async getFirefighters ({ commit }) {
-    API.get('/firefighters').then(firefighters => {
+  async getFirefighters ({ commit }, params) {
+    API.get('/firefighters', { params }).then(firefighters => {
+      commit('setTotalOfPages', firefighters.lastPage)
       commit('setFirefighters', firefighters.items)
     })
   },

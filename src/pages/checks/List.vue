@@ -8,6 +8,8 @@
                 :data="checks"
                 :columns="columns"
                 row-key="name"
+                hide-bottom
+                :pagination="{ rowsPerPage: 10 }"
             >
                 <q-td slot="body-cell-actions" slot-scope="props" :props="props">
                     <q-btn-group>
@@ -30,18 +32,19 @@
                         />
                     </q-btn-group>
                 </q-td>
-                <template slot= "top-right">
-                    <q-input placeholder="Procurar">
-                        <template v-slot:append>
-                            <q-icon name="search" />
-                        </template>
-                    </q-input>
-                </template>
                 <div slot="top-left">
                     <q-btn label="adicionar nova checagem" icon="add" color="green-13" :to="{ name: 'checks_add' }" />
                 </div>
             </q-table>
         </q-page>
+        <div class="row justify-center" v-if="totalOfPages > 1">
+            <q-pagination
+              v-model="page"
+              color="grey-8"
+              :max="totalOfPages"
+              size="sm"
+            />
+        </div>
     </div>
 </template>
 <script>
@@ -56,7 +59,8 @@ const { mapActions, mapGetters } = createNamespacedHelpers('check')
 export default {
     data () {
         return {
-             columns: [
+            page: 1,
+            columns: [
                 {
                     name: 'date',
                     required: true,
@@ -100,7 +104,7 @@ export default {
     },
 
     async created() {
-      this.getChecks()
+      await this.getChecks({ page: this.page })
     },
 
     methods: {
@@ -186,7 +190,13 @@ export default {
     },
 
     computed: {
-      ...mapGetters(['checks'])
+      ...mapGetters(['checks', 'totalOfPages'])
+    },
+
+    watch: {
+      page() {
+        this.getChecks({ page: this.page })
+      }
     }
 }
 </script>

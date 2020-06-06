@@ -17,3 +17,7 @@ export function itemsEquips (state) {
 export function firefighters (state) {
   return state.firefighters
 }
+
+export function totalOfPages (state) {
+  return state.totalOfPages
+}

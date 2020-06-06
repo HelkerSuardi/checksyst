@@ -8,6 +8,8 @@
                 :data="role === 'superAdm' ? firefighters : [firefighter]"
                 :columns="columns"
                 row-key="name"
+                hide-bottom
+                :pagination="{ rowsPerPage: 10 }"
             >
                 <q-td slot="body-cell-actions" slot-scope="props" :props="props">
                     <q-btn-group>
@@ -25,7 +27,7 @@
                     </q-btn-group>
                 </q-td>
                 <template v-if="role === 'superAdm'" slot= "top-right">
-                    <q-input placeholder="Procurar">
+                    <q-input placeholder="Procurar" v-model="usersNameSearch">
                         <template v-slot:append>
                             <q-icon name="search" />
                         </template>
@@ -36,6 +38,14 @@
                 </div>
             </q-table>
         </q-page>
+        <div class="row justify-center" v-if="totalOfPages > 1">
+          <q-pagination
+            v-model="page"
+            color="grey-8"
+            :max="totalOfPages"
+            size="sm"
+          />
+        </div>
     </div>
 </template>
 <script>
@@ -46,53 +56,55 @@ import authService from '../../service/auth-service'
 export default {
     data () {
         return {
-             columns: [
-                {
-                    name: 'name',
-                    required: true,
-                    label: 'Nome',
-                    align: 'left',
-                    field: row => row.name,
-                    format: val => `${val}`,
-                    sortable: true
-                },
-                {
-                    name: 'permission',
-                    required: true,
-                    label: 'Permissões',
-                    align: 'left',
-                    field: row => row.role,
-                    format: val => {
-                      if (val === 'superAdm') {
-                        return 'Super Adm'
-                      }
-                      if (val === 'adm') {
-                        return 'Adm'
-                      }
-                      return 'Operador'
-                    },
-                    sortable: true
-                },
-                {
-                    name: 'document',
-                    required: true,
-                    label: 'RG',
-                    align: 'left',
-                    field: row => row.rg,
-                    format: val => `${val}`,
-                    sortable: true
-                },
-                {
-                    name: 'actions',
-                    required: true,
-                    label: 'Ações',
-                    align: 'left',
-                    field: row => row._id,
-                    format: val => `${val}`,
-                    sortable: true
-                },
-            ],
-            role: ''
+          usersNameSearch: '',
+          page: 1,
+          columns: [
+              {
+                  name: 'name',
+                  required: true,
+                  label: 'Nome',
+                  align: 'left',
+                  field: row => row.name,
+                  format: val => `${val}`,
+                  sortable: true
+              },
+              {
+                  name: 'permission',
+                  required: true,
+                  label: 'Permissões',
+                  align: 'left',
+                  field: row => row.role,
+                  format: val => {
+                    if (val === 'superAdm') {
+                      return 'Super Adm'
+                    }
+                    if (val === 'adm') {
+                      return 'Adm'
+                    }
+                    return 'Operador'
+                  },
+                  sortable: true
+              },
+              {
+                  name: 'document',
+                  required: true,
+                  label: 'RG',
+                  align: 'left',
+                  field: row => row.rg,
+                  format: val => `${val}`,
+                  sortable: true
+              },
+              {
+                  name: 'actions',
+                  required: true,
+                  label: 'Ações',
+                  align: 'left',
+                  field: row => row._id,
+                  format: val => `${val}`,
+                  sortable: true
+              },
+          ],
+          role: ''
         }
     },
 
@@ -106,7 +118,7 @@ export default {
       async buildDataTable() {
         this.role = authService.getRole()
         if (this.role === 'superAdm') {
-          await this.getFirefighters()
+          await this.getFirefighters({ name: this.usersNameSearch, page: this.page })
           return
         }
 
@@ -140,7 +152,17 @@ export default {
     },
 
     computed: {
-      ...mapGetters(['firefighters', 'firefighter'])
+      ...mapGetters(['firefighters', 'firefighter', 'totalOfPages'])
+    },
+
+    watch: {
+      usersNameSearch() {
+        this.buildDataTable()
+      },
+
+      page() {
+        this.buildDataTable()
+      }
     }
 }
 </script>

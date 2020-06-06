@@ -12,7 +12,7 @@ export default {
         email: '',
         password: '',
         rg: '',
-        role: ''
+        role: 'operator'
       }
     }
   },

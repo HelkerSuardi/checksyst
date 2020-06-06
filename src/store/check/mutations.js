@@ -17,3 +17,7 @@ export function setItemsEquips (state, itemsEquips) {
 export function setFirefighters (state, firefighters) {
   state.firefighters = firefighters
 }
+
+export function setTotalOfPages (state, totalOfPages) {
+  state.totalOfPages = totalOfPages
+}

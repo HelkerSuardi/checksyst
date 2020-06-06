@@ -3,5 +3,6 @@ export default {
   vehicles: [],
   itemsEquips: [],
   firefighters: [],
-  check: ''
+  check: '',
+  totalOfPages: 1
 };

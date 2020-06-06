@@ -1,4 +1,5 @@
 export default {
   itemEquips: [],
-  itemEquip: ''
+  itemEquip: '',
+  totalOfPages: 1
 };

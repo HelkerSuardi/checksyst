@@ -5,3 +5,7 @@ export function vehicles (state) {
 export function vehicle (state) {
   return state.vehicle
 }
+
+export function totalOfPages (state) {
+  return state.totalOfPages
+}

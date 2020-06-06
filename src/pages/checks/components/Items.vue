@@ -33,19 +33,12 @@
                 </q-tr>
             </q-table>
             <q-btn
-                label="Cancelar"
-                icon="block"
-                style="width: 9rem"
-                color="red"
-                class="float-right"
-            />
-            <q-btn
                 label="Salvar"
                 :disable="selectedItemsEquips.length < 1"
                 style="width: 9rem"
                 icon="save"
                 color="green-13"
-                class="float-right q-mr-md"
+                class="float-right"
                 @click="save"
             />
 

@@ -52,19 +52,12 @@
                 <div class="row">
                     <div class="col-10" style="margin-left: 1rem">
                         <q-btn
-                            label="Cancelar"
-                            icon="block"
-                            style="width: 9rem"
-                            color="red"
-                            class="float-right"
-                        />
-                        <q-btn
                             label="Salvar"
                             type="submit"
                             style="width: 9rem"
                             icon="save"
                             color="green-13"
-                            class="float-right q-mr-md"
+                            class="float-right"
                         />
                     </div>
                 </div>

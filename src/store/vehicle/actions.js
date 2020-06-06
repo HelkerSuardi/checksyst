@@ -1,8 +1,9 @@
 import API from '../api'
 
 export default {
-  getVehicles ({ commit }) {
-    API.get('/vehicles').then(vehicles => {
+  getVehicles ({ commit }, params) {
+    API.get('/vehicles', { params } ).then(vehicles => {
+      commit('setTotalOfPages', vehicles.lastPage)
       commit('setVehicles', vehicles.items)
     })
   },

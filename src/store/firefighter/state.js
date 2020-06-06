@@ -1,4 +1,5 @@
 export default {
   firefighters: [],
-  firefighter: ''
+  firefighter: '',
+  totalOfPages: 1
 };

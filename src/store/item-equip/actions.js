@@ -1,8 +1,9 @@
 import API from '../api'
 
 export default {
-  getItemEquips({ commit }) {
-    API.get('/item-equips').then(itemEquips => {
+  getItemEquips({ commit }, params) {
+    API.get('/item-equips', { params }).then(itemEquips => {
+      commit('setTotalOfPages', itemEquips.lastPage)
       commit('setItemEquips', itemEquips.items)
     })
   },

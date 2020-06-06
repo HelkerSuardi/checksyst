@@ -5,3 +5,7 @@ export function itemEquips (state) {
 export function itemEquip (state) {
   return state.itemEquip
 }
+
+export function totalOfPages (state) {
+  return state.totalOfPages
+}

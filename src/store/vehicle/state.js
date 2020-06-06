@@ -1,4 +1,5 @@
 export default {
   vehicles: [],
-  vehicle: ''
+  vehicle: '',
+  totalOfPages: 1
 };

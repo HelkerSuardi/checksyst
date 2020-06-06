@@ -5,3 +5,7 @@ export function firefighters (state) {
 export function firefighter (state) {
   return state.firefighter
 }
+
+export function totalOfPages (state) {
+  return state.totalOfPages
+}
