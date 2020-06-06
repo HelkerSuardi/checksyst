@@ -27,7 +27,7 @@ const routes = [
         component: () => import("../pages/users/Create.vue")
       },
       {
-        path: "users/update",
+        path: "users/update/:id",
         name: "users_update",
         meta: { requiresAuth: true },
         component: () => import("../pages/users/Update.vue")
@@ -46,7 +46,7 @@ const routes = [
         component: () => import("../pages/vehicles/Create.vue")
       },
       {
-        path: "vehicles/update",
+        path: "vehicles/update/:id",
         name: "vehicles_update",
         meta: { requiresAuth: true },
         component: () => import("../pages/vehicles/Update.vue")
@@ -65,7 +65,7 @@ const routes = [
         component: () => import("../pages/items/Create.vue")
       },
       {
-        path: "items/update",
+        path: "items/update/:id",
         name: "items_update",
         meta: { requiresAuth: true },
         component: () => import("../pages/items/Update.vue")
@@ -84,7 +84,7 @@ const routes = [
         component: () => import("../pages/checks/Create.vue")
       },
       {
-        path: "checks/update",
+        path: "checks/update/:id",
         name: "checks_update",
         meta: { requiresAuth: true },
         component: () => import("../pages/checks/Update.vue")
@@ -102,13 +102,7 @@ const routes = [
     name: "logout",
     meta: { requiresAuth: false },
     component: () => import("../pages/session/Logout.vue")
-  },
-  // {
-  //   path: '/reset-password',
-  //   name: 'reset_password',
-  //   meta: { requiresAuth: false },
-  //   component: () => import('../pages/session/ForgotPassword.vue')
-  // }
+  }
 
 ];
 
