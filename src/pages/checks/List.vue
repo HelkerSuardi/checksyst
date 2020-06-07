@@ -15,7 +15,7 @@
                     <q-btn-group>
                         <q-btn
                             icon="info"
-                            :disable="props.row.status === 'OK'"
+                            :disable="props.row.status === 'NOTDONE'"
                             color="standard"
                             text-color="secondary"
                             @click="showPdf(props.row)"
@@ -88,6 +88,20 @@ export default {
                     label: 'Veículo',
                     align: 'left',
                     field: row => row.vehicle.name,
+                    format: val => `${val}`,
+                    sortable: true
+                },
+                {
+                    name: 'status',
+                    required: true,
+                    label: 'Status',
+                    align: 'left',
+                    field: row => {
+                      if (row.status === 'NOTDONE') {
+                        return 'Aguardando checagem'
+                      }
+                      return 'Checagem feita'
+                    },
                     format: val => `${val}`,
                     sortable: true
                 },

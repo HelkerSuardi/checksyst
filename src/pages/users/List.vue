@@ -69,6 +69,15 @@ export default {
                   sortable: true
               },
               {
+                  name: 'email',
+                  required: true,
+                  label: 'E-mail',
+                  align: 'left',
+                  field: row => row.email,
+                  format: val => `${val}`,
+                  sortable: true
+              },
+              {
                   name: 'permission',
                   required: true,
                   label: 'Permissões',
