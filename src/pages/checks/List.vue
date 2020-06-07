@@ -138,7 +138,7 @@ export default {
               position: 'top',
               color: 'green-13'
             })
-            this.getChecks()
+            this.getChecks({ page: this.page })
           })
           .catch (e => {
             this.$q.notify({
