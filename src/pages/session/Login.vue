@@ -21,7 +21,7 @@
               v-model="password"
               required
             />
-            <q-btn class="full-width" label="Entrar" type="submit" color="primary" />
+            <q-btn :loading="loading" class="full-width" label="Entrar" type="submit" color="primary" />
           </q-form>
           <div class="column items-center q-pt-lg">
             <q-chip
@@ -50,12 +50,14 @@ export default {
   data () {
     return {
       email: 'admin@admin.com',
-      password: '123'
+      password: '123',
+      loading: false
     }
   },
 
   methods: {
     login () {
+      this.loading = true
       this.$axios.post('/auth/authenticate', { email: this.email, password: this.password }).then(response => {
         const { token, data } = response.data
 
@@ -84,7 +86,9 @@ export default {
           position: 'top',
           color: 'green-13'
         })
+        this.loading = false
       }).catch(({ response }) => {
+        this.loading = false
         const { message } = response.data
         this.$q.notify({
           message,

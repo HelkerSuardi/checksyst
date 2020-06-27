@@ -139,15 +139,15 @@ export default {
           title: 'Remover Usuário',
           message: 'Você realmente gostaria de excluir esse usuário ?',
           cancel: true
-        }).onOk(() => {
-          this.removeFirefighter(id)
-          .then(() => {
+        }).onOk(async () => {
+          await this.removeFirefighter(id)
+          .then(async () => {
             this.$q.notify({
               message: 'Usuário excluído com sucesso!',
               position: 'top',
               color: 'green-13'
             })
-            this.getFirefighters()
+            await this.getFirefighters()
           })
           .catch (e => {
             this.$q.notify({
