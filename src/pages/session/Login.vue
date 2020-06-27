@@ -21,7 +21,14 @@
               v-model="password"
               required
             />
-            <q-btn :loading="loading" class="full-width" label="Entrar" type="submit" color="primary" />
+            <q-btn
+              :loading="loading"
+              :disable="loading"
+              class="full-width"
+              label="Entrar"
+              type="submit"
+              color="primary"
+            />
           </q-form>
           <div class="column items-center q-pt-lg">
             <q-chip
