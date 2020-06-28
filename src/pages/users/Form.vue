@@ -28,6 +28,7 @@
                             input-debounce="0"
                             label="Permissão"
                             :options="roles"
+                            :readonly="role !== 'superAdm'"
                         />
                     </div>
                 </div>
@@ -140,6 +141,10 @@ export default {
 
       userId() {
         return authService.getId()
+      },
+
+      role() {
+        return authService.getRole()
       }
     }
 }

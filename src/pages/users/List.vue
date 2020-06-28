@@ -20,6 +20,7 @@
                             :to="{ name: 'users_update', params: { id: props.row.id } }"
                         />
                         <q-btn
+                            v-if="role === 'superAdm'"
                             icon="delete_forever"
                             text-color="red"
                             @click="remove(props.row.id)"
@@ -34,7 +35,12 @@
                     </q-input>
                 </template>
                 <div slot="top-left">
-                    <q-btn label="Adicionar novo usuário" icon="add" color="green-13" :to="{ name: 'users_add' }" />
+                    <q-btn
+                      v-if="role === 'superAdm'"
+                      label="Adicionar novo usuário"
+                      icon="add" color="green-13"
+                      :to="{ name: 'users_add' }"
+                    />
                 </div>
             </q-table>
         </q-page>
