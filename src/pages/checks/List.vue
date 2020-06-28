@@ -130,15 +130,15 @@ export default {
           title: 'Remover Checagem',
           message: 'Você realmente gostaria de excluir essa checagem ?',
           cancel: true
-        }).onOk(() => {
-          this.removeCheck(id)
-          .then(() => {
+        }).onOk(async () => {
+          await this.removeCheck(id)
+          .then(async () => {
+            await this.getChecks({ page: this.page })
             this.$q.notify({
               message: 'Checagem excluída com sucesso!',
               position: 'top',
               color: 'green-13'
             })
-            this.getChecks({ page: this.page })
           })
           .catch (e => {
             this.$q.notify({

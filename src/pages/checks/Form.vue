@@ -79,6 +79,7 @@
               @save="save"
               @removeItemEquip="removeItemEquip"
               :selectedItemsEquips="check.itemsEquips"
+              :check="check"
             />
 
         </q-page>

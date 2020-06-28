@@ -16,7 +16,6 @@ export default {
 
   removeCheck ({ dispatch }, checkId) {
     API.delete(`/checks/${checkId}`)
-    dispatch('getChecks')
   },
 
   getVehicles ({ commit }) {
@@ -38,7 +37,6 @@ export default {
   },
 
   async saveCheckAndUpdateVehicle ({ commit }, { check }) {
-    console.log(check)
     if (check.id) {
       try {
         await API.put(`/checks/${check.id}`, check)

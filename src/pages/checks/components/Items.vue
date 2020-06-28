@@ -34,7 +34,7 @@
             </q-table>
             <q-btn
                 label="Salvar"
-                :disable="selectedItemsEquips.length < 1"
+                :disable="disableSaveButton()"
                 style="width: 9rem"
                 icon="save"
                 color="green-13"
@@ -49,6 +49,7 @@
 export default {
     props: {
       selectedItemsEquips: Array,
+      check: Object
     },
 
     data () {
@@ -92,6 +93,12 @@ export default {
     },
 
     methods: {
+      disableSaveButton() {
+        if (!this.check.date || !this.check.firefighter || !this.check.vehicle || this.selectedItemsEquips.length < 1) {
+          return true
+        }
+        return false
+      },
       removeItemEquip(index) {
         this.$emit('removeItemEquip', index)
       },
