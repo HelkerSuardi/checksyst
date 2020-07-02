@@ -1,37 +1,37 @@
 import API from '../api'
 
 export default {
-  getChecks ({ commit }, params) {
-    API.get('/checks', { params }).then(checks => {
-      commit('setTotalOfPages', checks.lastPage)
+  async getChecks ({ commit }, params) {
+    await API.get('/checks', { params }).then(checks => {
       commit('setChecks', checks.items)
+      commit('setTotalOfPages', checks.lastPage)
     })
   },
 
-  getCheck ({ commit }, checkId) {
-    API.get(`/checks/${checkId}`).then(check => {
+  async getCheck ({ commit }, checkId) {
+    await API.get(`/checks/${checkId}`).then(check => {
       commit('setCheck', check)
     })
   },
 
-  removeCheck ({ dispatch }, checkId) {
-    API.delete(`/checks/${checkId}`)
+  async removeCheck ({ dispatch }, checkId) {
+    await API.delete(`/checks/${checkId}`)
   },
 
-  getVehicles ({ commit }) {
-    API.get('/vehicles').then(vehicles => {
+  async getVehicles ({ commit }) {
+    await API.get('/vehicles').then(vehicles => {
       commit('setVehicles', vehicles.items)
     })
   },
 
-  getItemsEquips ({ commit }) {
-    API.get('/item-equips').then(itemsEquips => {
+  async getItemsEquips ({ commit }) {
+    await API.get('/item-equips').then(itemsEquips => {
       commit('setItemsEquips', itemsEquips.items)
     })
   },
 
-  getFirefighters ({ commit }) {
-    API.get('/firefighters').then(firefighters => {
+  async getFirefighters ({ commit }) {
+    await API.get('/firefighters').then(firefighters => {
       commit('setFirefighters', firefighters.items)
     })
   },

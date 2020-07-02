@@ -1,27 +1,27 @@
 import API from '../api'
 
 export default {
-  getItemEquips({ commit }, params) {
-    API.get('/item-equips', { params }).then(itemEquips => {
-      commit('setTotalOfPages', itemEquips.lastPage)
+  async getItemEquips({ commit }, params) {
+    await API.get('/item-equips', { params }).then(itemEquips => {
       commit('setItemEquips', itemEquips.items)
+      commit('setTotalOfPages', itemEquips.lastPage)
     })
   },
 
-  getItemEquip ({ commit }, itemEquipId) {
-    API.get(`/item-equips/${itemEquipId}`).then(itemEquip => {
+  async getItemEquip ({ commit }, itemEquipId) {
+    await API.get(`/item-equips/${itemEquipId}`).then(itemEquip => {
       commit('setItemEquip', itemEquip)
     })
   },
 
-  removeItemEquip ({ commit }, itemEquipId) {
-    API.delete(`/item-equips/${itemEquipId}`)
+  async removeItemEquip ({ commit }, itemEquipId) {
+    await API.delete(`/item-equips/${itemEquipId}`)
   },
 
   async createNewItem ({ commit }, newItem ){
     if (newItem.id) {
       try {
-        API.put(`/item-equips/${newItem.id}`, newItem)
+        await API.put(`/item-equips/${newItem.id}`, newItem)
         return
       } catch (e) {
         console.log(e)

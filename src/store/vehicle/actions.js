@@ -1,21 +1,21 @@
 import API from '../api'
 
 export default {
-  getVehicles ({ commit }, params) {
-    API.get('/vehicles', { params } ).then(vehicles => {
-      commit('setTotalOfPages', vehicles.lastPage)
+  async getVehicles ({ commit }, params) {
+    await API.get('/vehicles', { params } ).then(vehicles => {
       commit('setVehicles', vehicles.items)
+      commit('setTotalOfPages', vehicles.lastPage)
     })
   },
 
-  getVehicle({ commit }, vehicleId) {
-    API.get(`/vehicles/${vehicleId}`).then(vehicle => {
+  async getVehicle({ commit }, vehicleId) {
+    await API.get(`/vehicles/${vehicleId}`).then(vehicle => {
       commit('setVehicle', vehicle)
     })
   },
 
-  removeVehicle ({ commit }, vehicleId) {
-    API.delete(`/vehicles/${vehicleId}`)
+  async removeVehicle ({ commit }, vehicleId) {
+    await API.delete(`/vehicles/${vehicleId}`)
   },
 
   async createNewVehicle ({ commit }, newVehicle ){
